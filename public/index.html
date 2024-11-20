@@ -8,10 +8,38 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
+    <div id="background"></div>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          var a_idx = 0;
+          document.getElementById('app').addEventListener('click', function(e) {
+              var a = ["❤富强❤","❤民主❤","❤文明❤","❤和谐❤","❤自由❤","❤平等❤","❤公正❤","❤法治❤","❤爱国❤","❤敬业❤","❤诚信❤","❤友善❤"];
+              var i = document.createElement('span');
+              i.textContent = a[a_idx];
+              a_idx = (a_idx + 1) % a.length;
+              var x = e.pageX,
+                  y = e.pageY;
+              i.style.zIndex = '999999999999999999999999999999999999999999999999999999999999999999999';
+              i.style.top = (y - 20) + 'px';
+              i.style.left = x + 'px';
+              i.style.position = 'absolute';
+              i.style.fontWeight = 'bold';
+              i.style.color = 'rgb(' + Math.floor(255 * Math.random()) + ',' + Math.floor(255 * Math.random()) + ',' + Math.floor(255 * Math.random()) + ')';
+              document.getElementById('app').appendChild(i);
+  
+              setTimeout(function() {
+                  i.style.transition = 'top 1.5s, opacity 1.5s';
+                  i.style.top = (y - 180) + 'px';
+                  i.style.opacity = '0';
+                  setTimeout(function() {
+                      i.remove();
+                  }, 1500);
+              }, 0);
+          });
+      });
+    </script>
+  
+  <!-- built files will be auto injected -->
   </body>
 </html>
