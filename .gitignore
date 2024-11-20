@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-
+/server/file
+/server/ngrok
 
 # local env files
 .env.local
