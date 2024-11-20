@@ -70,7 +70,7 @@ import ParticleCanvas from './components/ParticlesBackground.vue';
 import CustomSelect from './components/KnowledgeBaseSelector.vue';
 import AvatarModel from './components/avatarModel.vue';
 import { mapState, mapActions } from 'vuex';
-
+import axios from 'axios';
 
 
 export default {
@@ -101,6 +101,7 @@ export default {
     ...mapState(['selectedDBItem']),
   },
   mounted() {
+    this.fetchFolders();  // 获取文件夹数据
     // 在组件挂载后添加点击事件监听器
     document.addEventListener('click', this.handleClickOutside);
   },
@@ -139,6 +140,34 @@ export default {
     },
     updateKnowledgeBaseList(updatedList) {
       this.knowledgeBaseList = updatedList;  // 更新 knowledgeBaseList
+    },
+
+    async fetchFolders() {
+      try {
+        const response = await axios.get('http://localhost:5000/list_folders');
+
+        // 将获取到的文件夹数据
+        const newFolders = response.data.map(folder => ({
+          label: folder.label,
+          value: folder.value,
+          description: folder.description || '' // 处理空描述的情况
+        }));
+
+        // 遍历 newFolders，检查哪些 folder 不在 knowledgeBaseList 中
+        newFolders.forEach(newFolder => {
+          // 判断 knowledgeBaseList 中是否已经包含该 folder
+          const isExist = this.knowledgeBaseList.some(existingFolder => existingFolder.value === newFolder.value);
+
+          // 如果不在，则将该文件夹添加到 knowledgeBaseList 中
+          if (!isExist) {
+            this.knowledgeBaseList.push(newFolder);
+          }
+        });
+
+        console.log("文件夹数据:", this.knowledgeBaseList); // 输出文件夹数据
+      } catch (error) {
+        console.error("Error fetching folders:", error); // 错误处理
+      }
     },
   },
 };

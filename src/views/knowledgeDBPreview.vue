@@ -3,7 +3,10 @@
     <!-- 侧边栏：显示文件树 -->
     <div class="sidebar">
       <div class="file-count-header">
-        <span>全部文献 {{ totalFileCount }}</span>
+        <button class="back-button" @click="goBack">
+          ⬅️
+        </button>
+        <span style="text-align: center; flex-grow: 1;">全部文献 {{ totalFileCount }}</span>
       </div>
       <el-tree ref="tree" :data="fileTree" :props="defaultProps" node-key="id"
         :default-expanded-keys="defaultExpandedKeys" @node-click="handleNodeClick"
@@ -120,6 +123,10 @@ export default {
       const fileExtension = filePath.split('.').pop().toLowerCase();
       this.isDocx = fileExtension === 'docx';
     },
+    // 返回上一级
+    goBack() {
+      this.$router.go(-1); // 假设你使用的是 Vue Router
+    },
   },
   created() {
     this.fetchFileTree();
@@ -142,9 +149,46 @@ export default {
 .sidebar {
   width: 20%;
   height: 100%;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   overflow-y: auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-right: #409eff 2px solid;
 }
+
+.file-count-header {
+  display: flex;
+  justify-content: space-between;
+  /* 让返回按钮和标题分开布局 */
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.back-button {
+  font-size: 20px;
+  width: 40px;
+  /* 按钮大小 */
+  height: 40px;
+  /* 按钮大小 */
+  border: none;
+  border-radius: 50%;
+  /* 圆形 */
+  background-size: 100% 100%;
+  /* 强制让图片填充整个按钮 */
+  background-position: center;
+  cursor: pointer;
+  /* 鼠标悬停时显示为可点击 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+}
+
+.back-button:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+}
+
 
 .file-preview {
   width: 80%;
@@ -152,6 +196,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .custom-node {

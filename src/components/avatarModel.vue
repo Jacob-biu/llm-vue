@@ -52,7 +52,7 @@ export default {
           console.log('跳转到知识库页面');
           break;
         case 'knowledgePre':
-          // this.$router.go('/knowledgeDBPreview');
+          this.$router.push('/knowledge-db-preview');
           // 跳转到知识库预览页面或执行相关操作
           console.log('跳转到知识库预览页面');
           break;

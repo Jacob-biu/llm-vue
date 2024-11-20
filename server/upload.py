@@ -10,8 +10,8 @@ app = Flask(__name__)
 CORS(app)
 
 # 设置文件上传保存路径
-# UPLOAD_FOLDER = '/home/bxliu/miniconda/LLM/llm_demo_0_2_1/llm_demo/server/files'
-UPLOAD_FOLDER = 'E://Code//vue//llm-vue//server//file'
+UPLOAD_FOLDER = '/home/bxliu/miniconda/LLM/llm-vue/server/file'
+# UPLOAD_FOLDER = 'E://Code//vue//llm-vue//server//file'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # 确保上传文件夹存在
